@@ -72,7 +72,7 @@ class CrimeListFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : CrimeHolder {
             val layout = when(viewType) {
                 0 -> R.layout.list_item_crime
-                1 ->
+                1 -> R.layout.list_item_crime_police
                 else -> R.layout.list_item_crime
             }
             val view = layoutInflater.inflate(layout, parent, false)
