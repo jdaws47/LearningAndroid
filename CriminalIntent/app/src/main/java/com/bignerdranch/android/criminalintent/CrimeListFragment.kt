@@ -1,16 +1,19 @@
 package com.bignerdranch.android.criminalintent
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.text.DateFormat
 
 private const val TAG = "CrimeListFragment"
 
@@ -48,17 +51,24 @@ class CrimeListFragment : Fragment() {
     private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private lateinit var crime: Crime
 
+        private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
+        private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
+        private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
+
         init {
             itemView.setOnClickListener(this)
         }
 
-        private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
-        private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
-
         fun bind(crime: Crime) {
             this.crime = crime
             titleTextView.text = this.crime.title
-            dateTextView.text = this.crime.date.toString()
+            dateTextView.text = android.text.format.DateFormat.format("EEEE, MMM dd, yyyy", this.crime.date)
+            solvedImageView.visibility = if (crime.isSolved) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
         }
 
         override fun onClick(v: View) {
@@ -87,7 +97,7 @@ class CrimeListFragment : Fragment() {
         }
 
         override fun getItemViewType(position: Int): Int {
-            return if(crimes[position].requiresPolice) 1 else 0
+            return if(crimes[position].requiresPolice && !crimes[position].isSolved) 1 else 0
         }
     }
 
