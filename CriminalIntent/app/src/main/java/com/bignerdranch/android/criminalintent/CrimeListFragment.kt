@@ -79,8 +79,10 @@ class CrimeListFragment : Fragment() {
         /*adapter = CrimeAdapter(crimes)
         crimeRecyclerView.adapter = adapter*/
         Log.d(TAG, "updating UI")
-        adapter?.crimes = crimes
-        adapter?.submitList(crimes)
+        adapter?.let { adapter ->
+            adapter.crimes = crimes
+            adapter.submitList(crimes)
+        }
     }
 
     private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
