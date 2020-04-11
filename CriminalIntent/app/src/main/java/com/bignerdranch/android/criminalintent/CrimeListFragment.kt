@@ -176,12 +176,8 @@ class CrimeListFragment : Fragment() {
         }
 
         override fun getItemViewType(position: Int): Int {
-            return /*if(crimes[position].requiresPolice && !crimes[position].isSolved) 1 else*/ 0
+            return if(crimes[position].requiresPolice && !crimes[position].isSolved) 1 else 0
         }
-
-        /*override fun submitList(list: List<Crime>?) {
-            super.submitList(list?.let { ArrayList(it) })
-        }*/
     }
 
     private inner class CrimeItemCallback: DiffUtil.ItemCallback<Crime>() {
@@ -190,10 +186,7 @@ class CrimeListFragment : Fragment() {
         }
 
         override fun areContentsTheSame(oldCrime: Crime, newCrime: Crime): Boolean {
-            val same = oldCrime == newCrime
-            return  same/*oldCrime.title == newCrime.title &&
-                    oldCrime.date == newCrime.date &&
-                    oldCrime.isSolved == newCrime.isSolved*/
+            return  oldCrime == newCrime
         }
     }
 
